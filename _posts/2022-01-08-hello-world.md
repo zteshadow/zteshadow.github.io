@@ -7,4 +7,5 @@ categories: [Life]
 
 Hello world! This is my first post, and also the start of the rest of my life:)
 
+
 Hi, 这是我的第一篇blog, 好好生活, 学习和思考!
