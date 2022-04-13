@@ -72,3 +72,74 @@ int main(int argc, char * argv[]) {
 - `ViewController`构造主界面
 
 # 2. SwiftUI
+
+基于SwiftUI创建的App与Objective-C App不同, 主入口被简化成了`@main`.
+
+![swiftui-app](swiftui-start.gif)
+
+```swift
+import SwiftUI
+
+@main
+struct SwiftUIMainEntryApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+```
+只能有一个标记为`@main`的实例, 并且该实例必须提供`main`函数:
+```swift
+public static func main()
+```
+## 2.1 自定义初始化
+
+与Objective-C的App相比, 主界面的构造更简单直接, 但是如何在launch结束后进行初始化呢? 答案是`@UIApplicationDelegateAdaptor`.
+
+```swift
+@main
+struct SwiftUIMainEntryApp: App {
+    // swiftlint:disable:next weak_delegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            appDelegate.createContentView()
+        }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate, UISceneDelegate {
+
+    override init() {
+        super.init()
+    }
+
+    func createContentView() -> some View {
+        ContentView()
+    }
+
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        return true
+    }
+}
+
+```
+我们可以自定义一个实现`UIApplicationDelegate`协议的类进行初始化操作.
+
+# 3. Simple Tabview with MVVM structure
+下面实现一个简单的基于tab的application.
+
+## 3.1 RootView and view model
+
+我们想设计这样的一个tabview:
+
+那么view和view model是这样的.
+
+## 3.2 接入初始化
+
+成功
+
