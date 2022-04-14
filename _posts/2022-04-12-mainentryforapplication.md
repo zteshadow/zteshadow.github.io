@@ -99,7 +99,7 @@ struct SwiftUIMainEntryApp: App {
 public static func main()
 ```
 
-## 2.1 自定义初始化
+## 2.2 自定义初始化
 
 那么初始化操作该如何进行呢?答案是`@UIApplicationDelegateAdaptor`.
 
