@@ -6,14 +6,14 @@ categories: [Foundation]
 img_path: /assets/img/post/
 ---
 
-我们知道所有程序的主入口是main函数, 这个概念在C语言里面的实现很直接.
+我们知道所有程序的主入口是`main`函数, 这个概念在C语言里面的实现简单而直接.
 ```c
 int main(int argc, char **argv) {
     printf("hello world\n");
     return 0;
 }
 ```
-对于一个与用户交互的程序, 那么初始化之后会构造主交互界面(比如CLI会循环接受用户输入), 然后进入一个事件循环处理各种用户事件, 系统事件, 伪代码如下.
+对于一个与用户交互的应用程序, 初始化之后通常会构造交互界面(比如`CLI`会接受用户输入), 然后进入事件循环处理各种用户事件, 系统事件, 伪代码如下.
 ```c
 int main(int argc, char **argv) {
     printf("hello world\n");
@@ -25,11 +25,11 @@ int main(int argc, char **argv) {
 ```
 # 1. Objective-C
 
-> 创建基于Objective-C的程序
+> 基于Objective-C的应用程序
 
 ![current picker](objc-start.gif)
 
-Objective-C程序保持了C语言简单直接的方式, 我们创建一个Objective-C App后Xcode会自动创建`main.m`文件.
+基于Objective-C的应用程序保持了C语言简单直接的风格, 应用程序创建后Xcode会自动生成`main.m`文件.
 
 ```objc
 #import <UIKit/UIKit.h>
@@ -45,11 +45,11 @@ int main(int argc, char * argv[]) {
 }
 
 ```
-程序会在`UIApplicationMain`中进入`Runloop`, 直到调用`exit()`退出或者异常终止.
+程序会在`UIApplicationMain`中进入`Runloop`处理用户交互与系统事件, 直到调用`exit()`退出程序或者异常终止.
 
 ## 1.1 初始化
 
-与main.m文件同时生成的还有`AppDelegate`, 可以把初始化操作放在`didFinishLaunchingWithOptions`中进行.
+与`main.m`文件同时生成的还有`AppDelegate`, 通常在`didFinishLaunchingWithOptions`中进行初始化操作.
 ```objc
 @implementation AppDelegate
 
@@ -67,19 +67,20 @@ int main(int argc, char * argv[]) {
 
  ![current picker](objc-main-screen.jpg)
 
-上面是程序的入口以及初始化过程, 那么主界面是如何构造的呢? 答案是配置加反射.
+启动程序完成初始化操作之后, 就要构造应用程序的交互界面了, 在`Objective-C`中是靠配置文件以及反射来完成的.
 - Target -> General -> Main Interface指定`Main` storyboard
 - Main storyboard中指定`ViewController`
 - `ViewController`构造主界面
 
-上述配置是存储在plist中的, 程序启动后会读取配置, 利用Objective-XC的反射机制初始化`ViewController`实例.
+上述配置存储在`Info.plist`文件中, 程序启动后读取配置, 利用`Objective-C`的反射机制初始化`ViewController`实例, 完成主界面构造.
 
 # 2. SwiftUI
 
-基于SwiftUI的App与Objective-C App不同, 主入口被简化成了`@main`.
+> 基于SwiftUI的应用程序
 
 ![swiftui-app](swiftui-start.gif)
 
+## 2.1 入口与主界面
 ```swift
 import SwiftUI
 
@@ -91,15 +92,16 @@ struct SwiftUIMainEntryApp: App {
         }
     }
 }
-
 ```
-`@main`标签要求实例必须提供`main`函数, 并且全局只能有一个标识为`@main`的实例.
+
+与`Objective-C`应用程序不同, 基于`SwiftUI`的应用程序直接呈现的是主界面的构造代码, 程序入口和初始化被简化隐藏了. 主入口被简化成了一个`@main`标签, 该标签要求实例提供一个全局静态`main`函数作为入口, 全局只能有一个标识为`@main`的实例.
 ```swift
 public static func main()
 ```
+
 ## 2.1 自定义初始化
 
-与Objective-C的App相比, 主界面的构造更简单直接, 但是如何在launch结束后进行初始化呢? 答案是`@UIApplicationDelegateAdaptor`.
+那么初始化操作该如何进行呢?答案是`@UIApplicationDelegateAdaptor`.
 
 ```swift
 @main
@@ -133,8 +135,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, UISceneDelegate {
 ```
 我们可以自定义一个实现`UIApplicationDelegate`协议的类进行初始化操作.
 
-# 3. Simple MVVM structure
-下面基于上述概念, 实现一个简单的基于`TabView`的application, 样式如下.
+# 3. Simple MVVM application
+下面是一个简单的基于`TabView`的应用程序展示如何进行初始化以及创建主界面, 样式如下.
+
 ![simple-tabview](simple-tabview.gif)
 
 ## 3.1 View and View Model
@@ -198,7 +201,26 @@ struct RootView: View {
 
 ```
 
-## 3.2 初始化与主界面展示
+## 3.2 初始化与主界面构造
+
+> 入口与初始化
+
+```swift
+@main
+struct SimpleApp: App {
+
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            appDelegate.createRootView()
+        }
+    }
+}
+
+```
+
+> 主界面构造
 
 ```swift
 class AppDelegate: NSObject, UIApplicationDelegate {
