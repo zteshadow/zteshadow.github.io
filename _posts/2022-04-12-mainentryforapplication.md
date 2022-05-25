@@ -23,13 +23,16 @@ int main(int argc, char **argv) {
     return 0
 }
 ```
+
+iOS应用程序 - 无论是基于Objective-C, 还是基于SwiftUI, 尽管实现方式不同, 模式都是相通的, 主入口提供功能: 初始化, 构造主界面, 进入事件循环.
+
 # 1. Objective-C
 
 > 基于Objective-C的应用程序
 
 ![current picker](objc-start.gif)
 
-基于Objective-C的应用程序保持了C语言简单直接的风格, 应用程序创建后Xcode会自动生成`main.m`文件.
+基于Objective-C的应用程序保持了C语言简单直接的风格, 应用程序创建后Xcode会自动生成`main.m`文件和`main`函数作为程序入口.
 
 ```objc
 #import <UIKit/UIKit.h>
@@ -45,11 +48,11 @@ int main(int argc, char * argv[]) {
 }
 
 ```
-程序会在`UIApplicationMain`中进入`Runloop`处理用户交互与系统事件, 直到调用`exit()`退出程序或者异常终止.
+程序会在`UIApplicationMain`中进行初始化, 构造UI, 进入`Runloop`处理用户交互与系统事件, 直到调用`exit()`退出程序或者异常终止.
 
 ## 1.1 初始化
 
-与`main.m`文件同时生成的还有`AppDelegate`, 通常在`didFinishLaunchingWithOptions`中进行初始化操作.
+与`main.m`文件同时生成的还有`AppDelegate.m`, 通常在`didFinishLaunchingWithOptions`中进行初始化操作.
 ```objc
 @implementation AppDelegate
 
@@ -67,14 +70,16 @@ int main(int argc, char * argv[]) {
 
  ![current picker](objc-main-screen.jpg)
 
-启动程序完成初始化操作之后, 就要构造应用程序的交互界面了, 在`Objective-C`中是靠配置文件以及反射来完成的.
+启动程序完成初始化操作之后, 就要构造应用程序的交互界面了, 在`Objective-C`中是靠配置文件利用反射来完成的.
 - Target -> General -> Main Interface指定`Main` storyboard
-- Main storyboard中指定`ViewController`
+- Main storyboard中指定`Custom Class`为`ViewController`
 - `ViewController`构造主界面
 
 上述配置存储在`Info.plist`文件中, 程序启动后读取配置, 利用`Objective-C`的反射机制初始化`ViewController`实例, 完成主界面构造.
 
 # 2. SwiftUI
+
+基于SwiftUI的应用程序结构更简单, 但是初始化部分稍微有些隐晦, 不易发现.
 
 > 基于SwiftUI的应用程序
 
@@ -133,7 +138,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UISceneDelegate {
 }
 
 ```
-我们可以自定义一个实现`UIApplicationDelegate`协议的类进行初始化操作.
+我们需要自定义一个实现`UIApplicationDelegate`协议的类进行初始化操作.
 
 # 3. Simple MVVM application
 下面是一个简单的基于`TabView`的应用程序展示如何进行初始化以及创建主界面, 样式如下.
