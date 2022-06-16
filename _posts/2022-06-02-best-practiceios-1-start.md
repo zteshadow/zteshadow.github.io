@@ -39,7 +39,7 @@ Subjects involved:
 
 ## 2. Get started
 
-Let's initialize our HappyTime application follow this post. [Simple](https://zteshadow.github.io/posts/mainentryforapplication/), you can find project files here [Code](https://github.com/zteshadow/best-practice-ios).
+Let's initialize our HappyTime application follow this post. <a href="https://zteshadow.github.io/posts/mainentryforapplication/" target="_blank">Simple</a>, you can find project files here <a href="https://github.com/zteshadow/best-practice-ios" target="_blank">Code</a>.
 
 ## 3. MVVM
 
@@ -47,5 +47,5 @@ We can see here, the root view of tab view follow the MVVM pattern.
 
 ![mvvm](mvp-mvvm.png)
 
-
+<a href="https://github.com/zteshadow/best-practice-ios/releases/tag/start" target="_blank">Tag</a>
 
