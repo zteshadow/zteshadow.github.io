@@ -3,6 +3,7 @@ layout: post
 title: Best Practice iOS Part1 - Start
 date: 2022-06-02 14:41 +0800
 categories: [BestPractice, iOS]
+tags: [SwiftUI, Swift, MVVM]
 img_path: /assets/img/post/mvp/
 ---
 
