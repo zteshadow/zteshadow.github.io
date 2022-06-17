@@ -2,7 +2,8 @@
 layout: post
 title: Best Practice iOS Part2 - Modules
 date: 2022-06-17 07:32 +0800
-categories: [BestPractice, iOS]
+categories: [BestPractice]
+tags: [iOS, SwiftUI, Swift, MVVM]
 img_path: /assets/img/post/mvp/
 ---
 
