@@ -9,6 +9,8 @@ img_path: /assets/img/post/mvp/
 
 # Why we need dependency injection
 
+## 1. Dependency
+
 Dependency is the connection between modules, take `BookList` module for example, it needs lots of services, such as:
 - **Network** for data retrieving
 - **Track** for event tracking
@@ -64,10 +66,35 @@ There are two types of dependency injection:
 - **initializer based**
 - **factory based**
 
-## de-couple
+If there are only couple of dependencies needed, just like the `tracker` above, we can use the `initializer based` injection, and use `factory based` injection in more dependencies case.
 
+## 2. Benefits of dependency injection
 
+Let's recap the benefits of dependency injection here:
 
+> **1. De-coupling**
 
-# How to create a simple dependency injection
+Using protocol instead of concrete implementation to de-couple the service user from service provider, will result in a flexibility of potential change
+
+> **2. Testable**
+
+Mocked service provider can be easly used in unit test
+
+# How to create a dependency injection factory
+
+Let's create a simple dependency injection factory step by step.
+
+## 1. Interface
+
+first we need to figure out the interface, and it is obviously simple.
+```swift
+public protocol ServiceAPI {
+    func registerService<T>(_ type: T.Type, _ builder: @escaping () -> T)
+    func getService<T>(_ type: T.Type) -> T
+}
+```
+
+## 2. Factory or singleton
+
+## 3. Parent and children
 
