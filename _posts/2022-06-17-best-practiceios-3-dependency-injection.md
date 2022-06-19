@@ -120,9 +120,7 @@ While within `Module1`, as a `up-forward` looking up, both private services and 
 
 ## 4. Practice
 
-> 1. Create Swift Package
-
-> 2. Interface design
+> 1. Create Swift Package and design interface
 
 > 3. How to save `key` and `closure`
 
