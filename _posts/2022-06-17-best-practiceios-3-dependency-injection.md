@@ -1,6 +1,6 @@
 ---
 layout: post
-title: best-practiceios-3-dependency-injection
+title: Best Practice iOS Part3 - Dependency injection
 date: 2022-06-17 09:30 +0800
 categories: [BestPractice]
 tags: [iOS, Swift, DI]
@@ -96,5 +96,36 @@ public protocol ServiceAPI {
 
 ## 2. Factory or singleton
 
-## 3. Parent and children
+There can be two types of service provider we can use, `Factory` or `Singleton`. The servcie we get from a `Singleton` provoder is always the same instance while we get a new instance of service everytime from a `Factory` provider.
+
+It's usually a `Singleton` provider we needed, and we can easily extend our service by adding a new parameter in `registerService` like this.
+```swift
+enum ServiceType {
+    case factory, singleton
+}
+func registerService<T>(_ type: T.Type, _ service: ServiceType = .singleton, _ builder: @escaping () -> T)
+```
+
+Now we just create a singleton service.
+
+## 3. Public and private
+
+Sometimes we need to share some open services among modules and hide the services only used within a module internally, just like this.
+
+![DI Tree](di-tree.png)
+
+Other modules such `Module2` and `Module3` can only get access the public services rather than private services provided by `Module1`.
+
+While within `Module1`, as a `up-forward` looking up, both private services and public services can be accessed.
+
+## 4. Practice
+
+> 1. Create Swift Package
+
+> 2. Interface design
+
+> 3. How to save `key` and `closure`
+
+> 4. Tree
+
 
