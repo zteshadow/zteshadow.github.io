@@ -26,12 +26,18 @@ iOS开发最初遵循原始的`MVC`架构, 但是随着业务的演进代码越�
 
 ![](todolist.gif)
 
-## MVC
+## 1. MVC
 [源代码](https://github.com/zteshadow/best-practice/tree/main/native-ios/MVC)
+
+标准的`MVC`结构如下, 我们把model和business logic都放在`controller`中.
+- 接收用户interaction
+- 更新model
+- 更新view
 
 ![](mvc.png)
 
 ```swift
+// 点击删除item
 override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == Section.todos.rawValue else {
             return
@@ -54,7 +60,7 @@ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: Inde
 ```
 - View与business logic耦合在一起, 无法复用
 ```
-1. 如果要换个界面展示business, 代码修改, 无法保证business不动只切换UI
+1. 如果要换个界面比如卡片式, 整个代码都要修改, 无法复用现有的business logic
 ```
 
 > 优点
